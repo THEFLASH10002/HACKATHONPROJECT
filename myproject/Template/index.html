@@ -5,31 +5,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cardio Sync</title>
+    <title>Cardio Sync</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
-    <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
 <body>
     <nav>
+        <img src="{% static 'images/slogo.png' %}" alt="Small Cardio Sync Logo">
         <a href="{% url 'home' %}" class="nav-link">Home</a>
-        <a href="{% url 'service_match' %}" class="nav-link">Patients</a>
-        
-
+        <a href="{% url 'service_opportunities' %}" class="nav-link">Patients</a>
+        <a href="{% url 'service_match' %}" class="nav-link">Tutoring Services</a>
     </nav>
-
     
-    
-    
-    
-    
-
-
-    
+    <header class="hero">
+       
+    </header>
+    <div class="welcome-text">
+        <h1> Welcome to Cardio Sync</h1>
+        <img src="{% static 'images/logo.png' %}" alt="Cardio Sync Logo">
+        <h2> Your trusted ally for monitoring your patients heart rates</h2>
+        
+    </div>
     <footer>
         <p>&copy; 2025 Interactive Webpage. All rights reserved.</p>
     </footer>
     <script src="{% static 'script.js' %}"></script>
 </body>
 </html>
-
-
