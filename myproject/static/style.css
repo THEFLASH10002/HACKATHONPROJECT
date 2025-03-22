@@ -433,3 +433,84 @@ p {
     text-align: left;
     align-self: flex-start;
 }
+
+#patient-info
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+}
+
+.profile-picture {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 20px;
+}
+
+.profile-picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-info {
+    flex: 1;
+}
+
+.profile-info h1 {
+    margin-top: 0;
+}
+
+.profile-body {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-top: 20px;
+}
+
+.vital-signs, .health-issues, .medication, .allergy {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: calc(50% - 40px);
+}
+
+.vital-signs ul, .health-issues ul, .medication ul, .allergy ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.vital-signs li, .health-issues li, .medication li, .allergy li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.vital-signs li:last-child, .health-issues li:last-child, .medication li:last-child, .allergy li:last-child {
+    border-bottom: none;
+}
+
+.vital-signs span:first-child, .health-issues span:first-child, .medication span:first-child, .allergy span:first-child {
+    font-weight: bold;
+}
