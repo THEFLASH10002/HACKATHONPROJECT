@@ -2,7 +2,7 @@
 .welcome-text {
     width: 100%; /* Full-width section */
     background: transparent; /* No background for simplicity */
-    color: #0000ff; /* Solid blue text color */
+    color: #000000; /* Solid blue text color */
     text-align: center; /* Center-align the text */
     padding: 4rem 2rem; /* Add spacing around the text */
     margin: 0; /* Reset any default margin */
