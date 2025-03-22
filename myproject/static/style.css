@@ -138,29 +138,52 @@ nav {
     top: 0;
     left: 0;
     width: 100%;
-    background: rgba(44, 62, 148, 0.8); /* Slightly transparent */
+    background: rgba(223, 55, 55, 0.8); /* Slightly transparent */
     color: white;
-    padding: 10px 0;
+    padding: 10px 20px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between; /* Ensures left and center alignment */
+    align-items: center; /* Aligns items vertically */
     z-index: 10000 !important; /* ✅ Ensure it's on top of everything */
 }
 
+/* Left side: logo & title */
+.nav-left {
+    display: flex;
+    align-items: center; /* Align logo and text */
+}
 
-nav a {
+.nav-left img {
+    height: 50px; /* Adjust logo size */
+    margin-right: 10px; /* Space between logo and text */
+}
+
+.nav-left h1 {
+    margin: 0; /* Remove default margin */
+    font-size: 24px;
+}
+
+/* Centered navigation links */
+.nav-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%); /* Perfectly center */
+    display: flex;
+    gap: 5px; /* Space between links */
+}
+
+.nav-center a {
     color: #fff; /* Link text color */
     text-decoration: none; /* Remove underline */
-    margin: 0 1rem;
     padding: 0.5rem 1rem;
     transition: background 0.3s ease, color 0.3s ease;
 }
 
-nav a:hover {
+.nav-center a:hover {
     background: rgba(75, 0, 130, 0.5); /* Transparent purple hover background */
     color: violet; /* Hover text color */
     border-radius: 5px; /* Rounded edges */
 }
-
 
 /* Style for the map container */
 #map {
@@ -169,28 +192,6 @@ nav a:hover {
     margin-bottom: 70px;
     border-radius: 10px;
 }
-
-/* Style for the volunteer list */
-.volunteer-list {
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 20px;
-    background: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-
-.volunteer-list a {
-    text-decoration: none;
-    color: #007bff;
-    font-weight: bold;
-}
-
-.volunteer-list a:hover {
-    text-decoration: underline;
-}
-    
 
 
 /* Hero Banners Wrapper */
