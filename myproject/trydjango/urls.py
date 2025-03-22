@@ -22,5 +22,6 @@ from pages.views import home_view, service_opportunities_view, service_match_vie
 urlpatterns = [
     path('', home_view, name='home'),  # Home Page
     path('service-opportunities/', service_opportunities_view, name='service_opportunities'),  # Service Opportunities
-    path('patients/', service_match_view, name='patients'),  # Service Match
+    path('Patients/', service_match_view, name='Patients'), 
+    path('service-match/', service_match_view, name='service_match'),  # Service Match
 ]
