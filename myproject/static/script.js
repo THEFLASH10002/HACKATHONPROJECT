@@ -16,6 +16,83 @@ document.querySelectorAll(".nav-link").forEach(link => {
     });
 });
 
+// Simulated live vitals updater
+function updateVitals() {
+    // === BILLY ===
+    const billyVitals = {
+        hr: getRandomInt(60, 100),
+        bpS: getRandomInt(90, 130),
+        bpD: getRandomInt(60, 85),
+        spo2: getRandomInt(93, 100)
+    };
+
+    document.getElementById('hr-billy').textContent = billyVitals.hr;
+    document.getElementById('bp-billy').textContent = `${billyVitals.bpS}/${billyVitals.bpD}`;
+    document.getElementById('spo2-billy').textContent = billyVitals.spo2;
+
+    const billyStatus = getStatus(billyVitals);
+    const billyBanner = document.querySelector('.hero-banner.billy');
+    billyBanner.classList.remove('healthy', 'warning', 'critical');
+    billyBanner.classList.add(billyStatus);
+
+    // === AVA ===
+    const avaVitals = {
+        hr: getRandomInt(60, 110),
+        bpS: getRandomInt(88, 140),
+        bpD: getRandomInt(58, 90),
+        spo2: getRandomInt(92, 100)
+    };
+
+    function getStatus(vitals) {
+        const { hr, bpS, bpD, spo2 } = vitals;
+    
+        const hrOk = hr >= 60 && hr <= 100;
+        const bpOk = bpS >= 90 && bpS <= 120 && bpD >= 60 && bpD <= 80;
+        const spo2Ok = spo2 >= 95;
+    
+        const okCount = [hrOk, bpOk, spo2Ok].filter(Boolean).length;
+    
+        if (okCount === 3) return 'healthy';
+        if (okCount === 2) return 'warning';
+        return 'critical';
+    }
+    
+
+    document.getElementById('hr-ava').textContent = avaVitals.hr;
+    document.getElementById('bp-ava').textContent = `${avaVitals.bpS}/${avaVitals.bpD}`;
+    document.getElementById('spo2-ava').textContent = avaVitals.spo2;
+
+    const avaStatus = getStatus(avaVitals);
+    const avaBanner = document.querySelector('.hero-banner.ava');
+    avaBanner.classList.remove('healthy', 'warning', 'critical');
+    avaBanner.classList.add(avaStatus);
+
+    // === ZARA ===
+    const zaraVitals = {
+        hr: getRandomInt(58, 105),
+        bpS: getRandomInt(85, 135),
+        bpD: getRandomInt(55, 88),
+        spo2: getRandomInt(90, 100)
+    };
+
+    document.getElementById('hr-zara').textContent = zaraVitals.hr;
+    document.getElementById('bp-zara').textContent = `${zaraVitals.bpS}/${zaraVitals.bpD}`;
+    document.getElementById('spo2-zara').textContent = zaraVitals.spo2;
+
+    const zaraStatus = getStatus(zaraVitals);
+    const zaraBanner = document.querySelector('.hero-banner.zara');
+    zaraBanner.classList.remove('healthy', 'warning', 'critical');
+    zaraBanner.classList.add(zaraStatus);
+}
+
+
+// Helper function
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// Start the live update loop
+setInterval(updateVitals, 3000);
 
 
 
