@@ -7,21 +7,24 @@
     <title>Bison Serve - Service Opportunities</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
 
-    <!-- Leaflet CSS (for the map) -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    
 
     
 <body>
     <nav>
         <a href="{% url 'home' %}" class="nav-link">Home</a>
-        <a href="{% url 'service_match' %}" class="nav-link">Find-A-Tutor</a>
-        <a href="{% url 'service_opportunities' %}" class="nav-link">Tutoring Services</a>
+        <a href="{% url 'service_match' %}" class="nav-link">Patients</a>
+        
     </nav>
 
-    
+    <div class="welcome-text">
+        <h1> Bison Tutor </h1>
+        
+    </div>
 
     <footer>
         <p>&copy; 2025 Interactive Webpage. All rights reserved.</p>
     </footer>
+
 </body>
 </html>    

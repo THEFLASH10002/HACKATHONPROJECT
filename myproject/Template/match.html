@@ -4,17 +4,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bison Serve - Service Match</title>
+    <title>Bison Serve - Patients</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
 <head>
     
 <body>
     <nav>
         <a href="{% url 'home' %}" class="nav-link">Home</a>
-        <a href="{% url 'service_opportunities' %}" class="nav-link">Find-A-Tutor</a>
-        <a href="{% url 'service_match' %}" class="nav-link">Tutoring Services</a>
+        <a href="{% url 'service_match' %}" class="nav-link">Patients</a>
+        
     </nav>
 
+    <div class="welcome-text">
+        <h1>
+            Current Patients
+        </h1>
+        
+
+    </div>
+
+    <div class="hero-banners">
+        
+
+        <!-- Billy Bob -->
+        <a href="{% url 'service_match' %}" class="hero-banner-link">
+            <div class="hero-banner billy">
+                <img src="{% static 'images/billy_bob.jpg' %}" alt="Billy Bob" class="hero-img">
+                <h1>
+                    Billy Bob <span class="live-dot"></span>
+                </h1>
+                <p>123 Maplewood Drive, Springfield, IL 62704</p>
+                
+                  
+                <div class="vitals">
+                    <p>❤️ HR: <span id="hr-billy">--</span> bpm</p>
+                    <p>🩸 BP: <span id="bp-billy">--/--</span> mmHg</p>
+                    <p>🧠 SpO₂: <span id="spo2-billy">--</span>%</p>
+                </div>
+            </div>
+        </a>
+    
+        <!-- Ava Thompson -->
+        <a href="{% url 'service_opportunities' %}" class="hero-banner-link">
+            <div class="hero-banner ava">
+                <img src="{% static 'images/ava_thompson.jpg' %}" alt="Ava Thompson" class="hero-img">
+                <h1>
+                    Ava Thompson <span class="live-dot"></span>
+                </h1>
+                <p>456 Oceanview Blvd, Santa Clara, CA 625051</p>
+                
+                  
+                <div class="vitals">
+                    <p>❤️ HR: <span id="hr-ava">--</span> bpm</p>
+                    <p>🩸 BP: <span id="bp-ava">--/--</span> mmHg</p>
+                    <p>🧠 SpO₂: <span id="spo2-ava">--</span>%</p>
+                </div>
+            </div>
+        </a>
+    
+        <!-- Zara Kim -->
+        <a href="{% url 'service_opportunities' %}" class="hero-banner-link">
+            <div class="hero-banner zara">
+                <img src="{% static 'images/zara_kim.jpg' %}" alt="Zara Kim" class="hero-img">
+                <h1>
+                    Zara Kim <span class="live-dot"></span>
+                </h1>
+                <p>789 Elm Street, Brooklyn, NY 11201</p>
+                
+                
+                  
+
+                <div class="vitals">
+                    <p>❤️ HR: <span id="hr-zara">--</span> bpm</p>
+                    <p>🩸 BP: <span id="bp-zara">--/--</span> mmHg</p>
+                    <p>🧠 SpO₂: <span id="spo2-zara">--</span>%</p>
+                </div>
+            </div>
+        </a>
+    </div>
     
 
     <footer>

@@ -2,7 +2,7 @@
 .welcome-text {
     width: 100%; /* Full-width section */
     background: transparent; /* No background for simplicity */
-    color: #0000ff; /* Solid blue text color */
+    color: #2C3E94; /* Solid blue text color */
     text-align: center; /* Center-align the text */
     padding: 4rem 2rem; /* Add spacing around the text */
     margin: 0; /* Reset any default margin */
@@ -12,6 +12,34 @@
     font-size: 4rem; /* Large heading text */
     margin: 1rem 0; /* Space above and below heading */
     text-transform: uppercase; /* Uppercase text */
+}
+
+/* Animated Live Pulse */
+.live-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-left: 8px;
+    background-color: #4CAF50; /* Green for live status */
+    border-radius: 50%;
+    box-shadow: 0 0 5px #4CAF50;
+    animation: pulse 1.5s infinite ease-in-out;
+    vertical-align: middle;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.6);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 
@@ -110,8 +138,8 @@ nav {
     top: 0;
     left: 0;
     width: 100%;
-    background: rgba(44, 44, 84, 0.8); /* Slightly transparent */
-    color: #fff;
+    background: rgba(44, 62, 148, 0.8); /* Slightly transparent */
+    color: white;
     padding: 10px 0;
     display: flex;
     justify-content: center;
@@ -129,7 +157,7 @@ nav a {
 
 nav a:hover {
     background: rgba(75, 0, 130, 0.5); /* Transparent purple hover background */
-    color: #ff073a; /* Hover text color */
+    color: violet; /* Hover text color */
     border-radius: 5px; /* Rounded edges */
 }
 
@@ -171,29 +199,78 @@ nav a:hover {
     justify-content: center;  /* ✅ Center the banners */
     align-items: stretch; /* Align banners vertically */
     gap: 10rem; /* ✅ Smaller spacing */
-    padding: 2.5rem;
+    
+    gap: 2rem; 
     width: 100%;
     max-width: 3500px; /* ✅ Prevent banners from stretching too wide */
     margin: 0 auto; /* ✅ Centers the whole container */
 }
 
+.vitals {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.09rem;
+    border-radius: 10px;
+    margin-top: 1rem;
+    color: white;
+    font-size: .9rem;
+    z-index: 2;
+    position: relative;
+}
+.vitals p {
+    margin: 0.25rem 0;
+}
+
+
+.hero-img {
+    width: 100px;            /* ✅ Smaller size */
+    height: 100px;           /* ✅ Keep it square */
+    object-fit: cover;       /* ✅ Crop to fit without stretching */
+    border-radius: 50%;      /* ✅ Make it a circle */
+    margin: 0 auto 1rem;     /* ✅ Center and add spacing below */
+    border: 4px solid white; /* Optional: White border for pop */
+    z-index: 2;
+    position: relative;
+}
 /* Individual Hero Banner */
 .hero-banner {
     flex: 1; /* Equal width for each banner */
-    max-width: 800px; /* Limit the maximum width */
-    height: 350px; /* Fixed height for consistency */
+    max-width: 300px; /* Limit the maximum width */
+    height: 400px; /* Fixed height for consistency */
     display: flex;
     flex-direction: column;
     justify-content: flex-end; /* Move content to the bottom */
     text-align: center;
-    color: #fff;
+    margin-bottom: 300px;
+    color: white;
     padding: 3rem;
-    background: linear-gradient(135deg, #2c2c54, #8e44ad, #000); /* Gradient fallback */
+    background: linear-gradient(135deg, #2C3E94, #20C997); /* Royal blue → teal */
     position: relative;
     overflow: hidden;
     border-radius: 15px; /* Round the corners */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8); /* Add shadow for depth */
     transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease; /* Smooth hover effect */
+}
+
+/* Healthy glow */
+.hero-banner.healthy {
+    box-shadow: 0 0 20px 5px #4CAF50; /* Green glow */
+}
+
+/* Warning glow */
+.hero-banner.warning {
+    box-shadow: 0 0 20px 5px #FFA726; /* Orange glow */
+}
+
+/* Critical glow with pulse */
+.hero-banner.critical {
+    animation: pulse-alert 1.5s infinite;
+    box-shadow: 0 0 25px 7px #FF4C4C;
+}
+
+@keyframes pulse-alert {
+    0%   { box-shadow: 0 0 10px #FF4C4C; }
+    50%  { box-shadow: 0 0 30px #FF4C4C; }
+    100% { box-shadow: 0 0 10px #FF4C4C; }
 }
 
 
@@ -221,21 +298,31 @@ nav a:hover {
 }
 
 /* Text Inside Hero Banner */
+div a {
+    color: #fff; /* Link text color */
+    text-decoration: none; /* Remove underline */
+    margin: 0 1rem;
+    padding: 0.5rem 1rem;
+    transition: background 0.3s ease, color 0.3s ease;
+}
 .hero-banner h1 {
     font-size: 2rem;
-    color: #ff073a;
-    text-shadow: 0 0 5px #ff073a, 0 0 10px #4b0082;
+    color: #20C997;
+     /* Remove underline */
+    text-shadow: 0 0 5px black;
     margin-bottom: 0.5rem;
-    z-index: 2; /* Place text above overlay */
+    z-index: 20; /* Place text above overlay */
     position: relative;
 }
 
 .hero-banner p {
     font-size: 1.2rem;
-    color: #ccc;
+    
+    color: white;
     z-index: 2; /* Place text above overlay */
     position: relative;
 }
+
 
 
 /* Footer Styles */
@@ -245,7 +332,7 @@ footer {
     left: 0;
 
     width: 100%; /* Full-width footer */
-    background: #2c2c54; /* Dark background */
+    background: #2C3E94; /* Dark background */
     color: #fff; /* White text */
     text-align: center; /* Center-align text */
     padding: 0.5rem 0;
