@@ -6,7 +6,255 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bison Serve</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        /* Custom styles for enhanced patient form */
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
 
+
+        .patient-info-box {
+            background-color: #f8f9fc;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            padding: 2rem;
+            border-top: 5px solid #0056b3;
+        }
+
+
+        .patient-info-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #0056b3;
+            position: relative;
+        }
+
+
+        .patient-info-header:after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 3px;
+            background-color: #0056b3;
+            margin: 0.5rem auto;
+        }
+
+
+        .patient-info-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+
+        .patient-info-header p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -10px;
+        }
+
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            padding: 0 10px;
+            flex: 1 0 100%;
+        }
+
+
+        @media (min-width: 768px) {
+            .form-group.half {
+                flex: 0 0 50%;
+            }
+
+
+            .form-group.third {
+                flex: 0 0 33.333%;
+            }
+        }
+
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            font-size: 1rem;
+        }
+
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #0056b3;
+            box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.15);
+            outline: none;
+        }
+
+
+        .form-group input::placeholder {
+            color: #aaa;
+        }
+
+
+        .form-group .input-icon {
+            position: relative;
+        }
+
+
+        .input-icon i {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 10px;
+            color: #666;
+        }
+
+
+        .vital-sign {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-left: 3px solid #0056b3;
+            transition: transform 0.2s;
+        }
+
+
+        .vital-sign:hover {
+            transform: translateY(-2px);
+        }
+
+
+        .vital-sign-title {
+            font-weight: bold;
+            color: #0056b3;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+
+        .vital-sign-title span {
+            margin-left: 0.5rem;
+        }
+
+
+        .form-actions {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+
+        .btn-primary {
+            background-color: #0056b3;
+            color: white;
+        }
+
+
+        .btn-primary:hover {
+            background-color: #004494;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 86, 179, 0.2);
+        }
+
+
+        .btn-secondary {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+
+        .btn-secondary:hover {
+            background-color: #e0e0e0;
+        }
+
+
+        .progress-indicator {
+            margin: 2rem 0;
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+        }
+
+
+        .progress-indicator:before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #ddd;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+
+        .progress-step {
+            width: 30px;
+            height: 30px;
+            background-color: white;
+            border: 2px solid #ddd;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+            font-weight: bold;
+            color: #777;
+        }
+
+
+        .progress-step.active {
+            border-color: #0056b3;
+            background-color: #0056b3;
+            color: white;
+        }
+
+
+        .progress-label {
+            position: absolute;
+            top: 35px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            color: #666;
+            white-space: nowrap;
+        }
+    </style>
 </head>
 <body>
     <nav>
@@ -14,8 +262,145 @@
         <a href="{% url 'home' %}" class="nav-link">Home</a>
         <a href="{% url 'Patients' %}" class="nav-link">Patients</a>
         <a href="{% url 'service_opportunities' %}" class="nav-link">Find-A-Tutor</a>
-        <a href="{% url 'new_patients' %}" class="nav-link">New Patients</a>
     </nav>
+
+
+    <main class="container">
+        <div class="patient-info-box">
+            <div class="patient-info-header">
+                <h2>Patient Health Profile</h2>
+                <p>Complete the form below to add or update patient information</p>
+            </div>
+
+
+            <div class="progress-indicator">
+                <div class="progress-step active">1
+                    <span class="progress-label">Personal Info</span>
+                </div>
+                <div class="progress-step">2
+                    <span class="progress-label">Vitals</span>
+                </div>
+                <div class="progress-step">3
+                    <span class="progress-label">Medical History</span>
+                </div>
+            </div>
+
+
+            <form action="" method="post">
+                {% csrf_token %}
+               
+                <div class="form-row">
+                    <div class="form-group half">
+                        <label for="patient_name">Patient Full Name</label>
+                        <input type="text" id="patient_name" name="patient_name" placeholder="Enter patient's full name" required>
+                    </div>
+                   
+                    <div class="form-group half">
+                        <label for="date_of_birth">Date of Birth</label>
+                        <input type="date" id="date_of_birth" name="date_of_birth" required>
+                    </div>
+                </div>
+               
+                <div class="form-row">
+                    <div class="form-group half">
+                        <label for="patient_id">Patient ID</label>
+                        <input type="text" id="patient_id" name="patient_id" placeholder="Enter patient ID">
+                    </div>
+                   
+                    <div class="form-group half">
+                        <label for="blood_type">Blood Type</label>
+                        <select id="blood_type" name="blood_type">
+                            <option value="">Select Blood Type</option>
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                        </select>
+                    </div>
+                </div>
+               
+                <h3 style="margin: 2rem 0 1rem; color: #0056b3;">Vital Signs</h3>
+               
+                <div class="form-row">
+                    <div class="form-group third">
+                        <div class="vital-sign">
+                            <div class="vital-sign-title">
+                                ❤️ <span>Blood Pressure</span>
+                            </div>
+                            <input type="text" id="blood_pressure" name="blood_pressure" placeholder="120/80 mmHg">
+                        </div>
+                    </div>
+                   
+                    <div class="form-group third">
+                        <div class="vital-sign">
+                            <div class="vital-sign-title">
+                                💓 <span>Heart Rate</span>
+                            </div>
+                            <input type="number" id="heart_rate" name="heart_rate" min="0" max="300" placeholder="BPM">
+                        </div>
+                    </div>
+                   
+                    <div class="form-group third">
+                        <div class="vital-sign">
+                            <div class="vital-sign-title">
+                                🌡️ <span>Temperature</span>
+                            </div>
+                            <input type="number" id="temperature" name="temperature" step="0.1" placeholder="98.6 °F">
+                        </div>
+                    </div>
+                </div>
+               
+                <div class="form-row">
+                    <div class="form-group half">
+                        <div class="vital-sign">
+                            <div class="vital-sign-title">
+                                🫁 <span>Respiratory Rate</span>
+                            </div>
+                            <input type="number" id="respiratory_rate" name="respiratory_rate" min="0" max="100" placeholder="Breaths per minute">
+                        </div>
+                    </div>
+                   
+                    <div class="form-group half">
+                        <div class="vital-sign">
+                            <div class="vital-sign-title">
+                                ⚖️ <span>Weight</span>
+                            </div>
+                            <input type="number" id="weight" name="weight" step="0.1" placeholder="Weight in kg">
+                        </div>
+                    </div>
+                </div>
+               
+                <h3 style="margin: 2rem 0 1rem; color: #0056b3;">Additional Information</h3>
+               
+                <div class="form-group">
+                    <label for="allergies">Allergies</label>
+                    <textarea id="allergies" name="allergies" rows="3" placeholder="List any known allergies or write 'None' if applicable"></textarea>
+                </div>
+               
+                <div class="form-group">
+                    <label for="notes">Clinical Notes</label>
+                    <textarea id="notes" name="notes" rows="5" placeholder="Enter any relevant clinical observations or notes"></textarea>
+                </div>
+               
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save Patient Information</button>
+                    <button type="reset" class="btn btn-secondary">Clear Form</button>
+                </div>
+            </form>
+        </div>
+    </main>
+   
+    <footer>
+        <p>&copy; 2025 Interactive Webpage. All rights reserved.</p>
+    </footer>
+    <script src="{% static 'script.js' %}"></script>
+</body>
+</html>
+
 
     
     
