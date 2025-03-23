@@ -339,6 +339,9 @@
       .hero-content h1 {
         font-size: 2.2rem;
       }
+      .hero-content p {
+        margin-left: 500px;
+      }
       
       .welcome-text {
         margin-top: -50px;
@@ -415,7 +418,7 @@
       
       <div class="buttons-container">
         <!-- Changed button to anchor with the same URL -->
-        <a href="{% url 'Patients' %}" class="custom-button pulse">
+        <a href="{% url 'new_patients' %}" class="custom-button pulse">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
           </svg>
@@ -463,6 +466,26 @@
     </div>
   </section>
   
+
+
+  <!-- Chatbot Icon -->
+  <div id="chatbot-icon" onclick="toggleChatbot()">
+    <img src="{% static 'images/chatbot.jpg' %}" alt="Chatbot" />
+  </div>
+
+  <!-- Chatbot Box -->
+  <div id="chatbot-container">
+      <div id="chatbot-header" onclick="toggleChatbot()">💬 AI Tutor </div>
+      <div id="chatbot-box">
+          <div id="chatbox"></div>
+          <div id="chatbot-input">
+              <input type="text" id="userInput" placeholder="Type your message...">
+              <button onclick="sendMessage()">➤</button>
+          </div>
+      </div>
+  </div>
+
+
   <footer>
     <p>&copy; 2025 Cardio Sync. All rights reserved.</p>
   </footer>

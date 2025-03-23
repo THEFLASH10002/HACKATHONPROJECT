@@ -41,6 +41,20 @@
       
       margin-top: 75px;
     }
+
+
+    .welcome-container {
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+      text-align: center;
+      position: relative;
+      background-color: aliceblue;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 15px;
+
+    }
+
       </style>
       
 
@@ -50,87 +64,98 @@
           
         </div>
       </header>
-        
 
-    </div>
+      <div class="welcome-container">
+        <div class="hero-banners">
+            
 
-    <div class="hero-banners">
-        
-
-        <!-- Billy Bob -->
-        <a href="{% url 'service_match' %}" class="hero-banner-link">
-            <div class="hero-banner billy">
+            <!-- Billy Bob -->
+            <!-- Billy Bob -->
+            <a href="{% url 'service_opportunities' %}" class="hero-banner-link">
+                <div class="hero-banner billy">
                 <img src="{% static 'images/billy_bob.jpg' %}" alt="Billy Bob" class="hero-img">
+                
                 <h1>
                     Billy Bob <span class="live-dot"></span>
                 </h1>
+                
                 <p>123 Maplewood Drive, Springfield, IL 62704</p>
                 
-                  
                 <div class="vitals">
                     <p>❤️ HR: <span id="hr-billy">--</span> bpm</p>
                     <p>🩸 BP: <span id="bp-billy">--/--</span> mmHg</p>
                     <p>🧠 SpO₂: <span id="spo2-billy">--</span>%</p>
+                    <p class="risk-display" id="risk-billy">Risk Score: --</p>
                 </div>
-            </div>
-        </a>
-    
-        <!-- Ava Thompson -->
-        <a href="{% url 'service_opportunities' %}" class="hero-banner-link">
-            <div class="hero-banner ava">
-                <img src="{% static 'images/ava_thompson.jpg' %}" alt="Ava Thompson" class="hero-img">
-                <h1>
-                    Ava Thompson <span class="live-dot"></span>
-                </h1>
-                <p>456 Oceanview Blvd, Santa Clara, CA 625051</p>
-                
-                  
-                <div class="vitals">
-                    <p>❤️ HR: <span id="hr-ava">--</span> bpm</p>
-                    <p>🩸 BP: <span id="bp-ava">--/--</span> mmHg</p>
-                    <p>🧠 SpO₂: <span id="spo2-ava">--</span>%</p>
                 </div>
-            </div>
-        </a>
-    
-        <!-- Zara Kim -->
-        <a href="{% url 'service_opportunities' %}" class="hero-banner-link">
-            <div class="hero-banner zara">
-                <img src="{% static 'images/zara_kim.jpg' %}" alt="Zara Kim" class="hero-img">
-                <h1>
-                    Zara Kim <span class="live-dot"></span>
-                </h1>
-                <p>789 Elm Street, Brooklyn, NY 11201</p>
-                
-                
-                  
+            </a>
+            
+        
+            <!-- Ava Thompson -->
+            <a href="{% url 'service_opportunities' %}" class="hero-banner-link">
+                <div class="hero-banner ava">
+                    <img src="{% static 'images/ava_thompson.jpg' %}" alt="Ava Thompson" class="hero-img">
+                    <h1>
+                        Ava Thompson <span class="live-dot"></span>
+                    </h1>
+                    <p>456 Oceanview Blvd, Santa Clara, CA 625051</p>
+                    
 
-                <div class="vitals">
-                    <p>❤️ HR: <span id="hr-zara">--</span> bpm</p>
-                    <p>🩸 BP: <span id="bp-zara">--/--</span> mmHg</p>
-                    <p>🧠 SpO₂: <span id="spo2-zara">--</span>%</p>
+
+                    
+                    <div class="vitals">
+                        <p>❤️ HR: <span id="hr-ava">--</span> bpm</p>
+                        <p>🩸 BP: <span id="bp-ava">--/--</span> mmHg</p>
+                        <p>🧠 SpO₂: <span id="spo2-ava">--</span>%</p>
+                        <p class="risk-display" id="risk-ava">Risk Score: --</p>
+                    </div>
                 </div>
-            </div>
-        </a>
+            </a>
+        
+            <!-- Zara Kim -->
+            <a href="{% url 'service_opportunities' %}" class="hero-banner-link">
+                <div class="hero-banner zara">
+                    <img src="{% static 'images/zara_kim.jpg' %}" alt="Zara Kim" class="hero-img">
+                    <h1>
+                        Zara Kim <span class="live-dot"></span>
+                        <p>789 Elm Street, Brooklyn, NY 11201</p>
+                    </h1>
+                    
+                    
+                    
+                    
+
+                    <div class="vitals">
+                        
+                        <p>❤️ HR: <span id="hr-zara">--</span> bpm</p>
+                        <p>🩸 BP: <span id="bp-zara">--/--</span> mmHg</p>
+                        <p>🧠 SpO₂: <span id="spo2-zara">--</span>%</p>
+                        <p class="risk-display" id="risk-zara">Risk Score: --</p>
+                        
+                    </div>
+                </div>
+            </a>
+        </div>
     </div>
-
     <hr style="border: none; border-top: 2px solid #ccc; margin: 1rem 0;">
 
     <!-- Combined Live Data Graph -->
-    <div style="
-    background: rgba(255, 255, 255, 0.5); 
-    backdrop-filter: blur(5px); 
-    -webkit-backdrop-filter: blur(5px);
-    border-radius: 12px; 
-    padding: 1rem;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    margin: 10rem 0;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    margin-bottom: 100px;
-    
-">
-    <h2 style="text-align: center; color: #02d995;">Live Patient Vitals Overview</h2>
-    <canvas id="combined-chart" style="width: 100%; max-height: 300px;"></canvas>
+    <div class="welcome-container">
+        <div style="
+        background: rgba(1, 94, 28, 0.5); 
+        backdrop-filter: blur(5px); 
+        -webkit-backdrop-filter: blur(5px);
+        border-radius: 12px; 
+        padding: 1rem;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        margin: 10rem 0;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        margin-bottom: 100px;
+        
+    ">
+        <h2 style="text-align: center; color: #02d995;">Live Patient Vitals Overview</h2>
+        <canvas id="combined-chart" style="width: 100%; max-height: 300px;"></canvas>
+        </div>
     </div>
     
 
