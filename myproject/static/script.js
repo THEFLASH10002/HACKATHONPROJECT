@@ -5,7 +5,6 @@ document.querySelectorAll(".nav-link").forEach(link => {
     link.addEventListener("click", event => {
         const targetId = link.getAttribute("href").substring(1);
         const targetElement = document.getElementById(targetId);
-
         if (targetElement) {
             event.preventDefault();
             targetElement.scrollIntoView({ behavior: "smooth" });
@@ -20,7 +19,6 @@ function getStatus(vitals) {
     const bpOk = bpS >= 90 && bpS <= 120 && bpD >= 60 && bpD <= 80;
     const spo2Ok = spo2 >= 95;
     const okCount = [hrOk, bpOk, spo2Ok].filter(Boolean).length;
-
     if (okCount === 3) return 'healthy';
     if (okCount === 2) return 'warning';
     return 'critical';
@@ -107,35 +105,33 @@ function updateVitals() {
         {
             key: 'billy',
             vitals: {
-                hr: getRandomInt(65, 95),          
-                bpS: getRandomInt(92, 125),         
-                bpD: getRandomInt(62, 85),         
-                spo2: getRandomInt(95, 99)          
+                hr: getRandomInt(65, 95),
+                bpS: getRandomInt(92, 125),
+                bpD: getRandomInt(62, 85),
+                spo2: getRandomInt(95, 99)
             }
         },
         {
             key: 'ava',
             vitals: {
-                hr: getRandomInt(63, 100),         
-                bpS: getRandomInt(90, 130),        
-                bpD: getRandomInt(60, 90),         
-                spo2: getRandomInt(94, 100)        
+                hr: getRandomInt(63, 100),
+                bpS: getRandomInt(90, 130),
+                bpD: getRandomInt(60, 90),
+                spo2: getRandomInt(94, 100)
             }
         },
         {
             key: 'zara',
             vitals: {
-                hr: getRandomInt(60, 100),         
-                bpS: getRandomInt(88, 128),       
-                bpD: getRandomInt(60, 85),          
-                spo2: getRandomInt(93, 99)          
+                hr: getRandomInt(60, 100),
+                bpS: getRandomInt(88, 128),
+                bpD: getRandomInt(60, 85),
+                spo2: getRandomInt(93, 99)
             }
         }
     ];
 
-
     patients.forEach(({ key, vitals }) => {
-        // Update DOM
         document.getElementById(`hr-${key}`).textContent = vitals.hr;
         document.getElementById(`bp-${key}`).textContent = `${vitals.bpS}/${vitals.bpD}`;
         document.getElementById(`spo2-${key}`).textContent = vitals.spo2;
@@ -147,7 +143,6 @@ function updateVitals() {
         banner.classList.remove('healthy', 'warning', 'critical');
         banner.classList.add(getStatus(vitals));
 
-        // --- Predictive Risk via Django API ---
         fetch("/api/predict/", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -181,10 +176,57 @@ function updateVitals() {
     );
 }
 
+// --- Chatbot Toggle ---
+function toggleChatbot() {
+    const chatbotBox = document.getElementById("chatbot-container");
+    chatbotBox.style.display = chatbotBox.style.display === "none" ? "block" : "none";
+}
+window.toggleChatbot = toggleChatbot; // ✅ make available to HTML
+
+// --- Chatbot Message ---
+async function sendMessage() {
+    let userInput = document.getElementById("userInput").value.trim();
+    let chatbox = document.getElementById("chatbox");
+    if (userInput === "") return;
+
+    chatbox.innerHTML += `<p style="text-align: right;"><strong>You:</strong> ${userInput}</p>`;
+    document.getElementById("userInput").value = "";
+
+    try {
+        let response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+            method: "POST",
+            headers: {
+                "Authorization": "Bearer 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",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                model: "mistralai/mistral-7b-instruct",
+                messages: [{ role: "user", content: userInput }]
+            })
+        });
+
+        let data = await response.json();
+        let botReply = data.choices?.[0]?.message?.content || "I'm still learning. Can you rephrase?";
+        chatbox.innerHTML += `<p style="text-align: left;"><strong>Bot:</strong> ${botReply}</p>`;
+    } catch (error) {
+        console.error("Chatbot error:", error);
+        chatbox.innerHTML += `<p style="text-align: left; color: red;"><strong>Bot:</strong> Could not get a response.</p>`;
+    }
+
+    chatbox.scrollTop = chatbox.scrollHeight;
+}
+
 // --- Init ---
 document.addEventListener("DOMContentLoaded", function () {
     console.log("Vitals system loaded ✅");
     initCombinedChart();
     updateVitals();
     setInterval(updateVitals, 3000);
+
+    document.getElementById("chatbot-icon")?.addEventListener("click", toggleChatbot);
+    document.getElementById("userInput")?.addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+            sendMessage();
+        }
+    });
 });
