@@ -4,9 +4,280 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bison Serve</title>
+    <title>Bison Serve - Patient Monitoring</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        :root {
+            --primary: #0056b3;
+            --secondary: #6c757d;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #ffc107;
+            --info: #17a2b8;
+            --light: #f8f9fa;
+            --dark: #343a40;
+        }
 
+        body {
+            background-color: #f5f7fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-title {
+            color: var(--dark);
+        }
+
+        .dashboard-title h1 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+        .dashboard-title p {
+            margin: 0.5rem 0 0;
+            color: var(--secondary);
+        }
+
+        .dashboard-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #004494;
+        }
+
+        .btn-secondary {
+            background-color: var(--light);
+            color: var(--dark);
+            border: 1px solid #ddd;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e2e6ea;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .patient-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .patient-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .patient-card-header {
+            padding: 1.25rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .patient-info {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .patient-avatar {
+            width: 50px;
+            height: 50px;
+            background-color: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .patient-name-info h3 {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .patient-id {
+            color: var(--secondary);
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-stable {
+            background-color: rgba(40, 167, 69, 0.15);
+            color: var(--success);
+        }
+
+        .status-critical {
+            background-color: rgba(220, 53, 69, 0.15);
+            color: var(--danger);
+        }
+
+        .status-warning {
+            background-color: rgba(255, 193, 7, 0.15);
+            color: var(--warning);
+        }
+
+        .vital-signs {
+            padding: 1.25rem;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .vital-metric {
+            padding: 0.75rem;
+            background-color: var(--light);
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+
+        .vital-metric:hover {
+            background-color: #e9ecef;
+        }
+
+        .vital-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--secondary);
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .vital-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark);
+            display: flex;
+            align-items: baseline;
+        }
+
+        .vital-unit {
+            font-size: 0.8rem;
+            color: var(--secondary);
+            margin-left: 0.25rem;
+        }
+
+        .vital-trend {
+            font-size: 0.75rem;
+            margin-left: 0.5rem;
+        }
+
+        .trend-up {
+            color: var(--danger);
+        }
+
+        .trend-down {
+            color: var(--success);
+        }
+
+        .trend-stable {
+            color: var(--info);
+        }
+
+        .alert-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-left: 0.5rem;
+        }
+
+        .alert-normal {
+            background-color: var(--success);
+        }
+
+        .alert-warning {
+            background-color: var(--warning);
+        }
+
+        .alert-danger {
+            background-color: var(--danger);
+        }
+
+        .patient-card-footer {
+            display: flex;
+            border-top: 1px solid #eee;
+        }
+
+        .footer-action {
+            flex: 1;
+            padding: 0.75rem;
+            text-align: center;
+            color: var(--primary);
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .footer-action:hover {
+            background-color: rgba(0, 86, 179, 0.05);
+        }
+
+        .footer-action:not(:last-child) {
+            border-right: 1px solid #eee;
+        }
+
+        /* Add responsive styles */
+        @media (max-width: 768px) {
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <nav>
@@ -17,15 +288,155 @@
         <a href="{% url 'new_patients' %}" class="nav-link">New Patients</a>
     </nav>
 
-    
-    
-    
+    <main class="container">
+        <div class="dashboard-header">
+            <div class="dashboard-title">
+                <h1>Real-Time Patient Monitoring</h1>
+                <p>Currently monitoring 3 patients - Last updated: <span id="last-updated">March 22, 2025 15:43</span></p>
+            </div>
+            <div class="dashboard-actions">
+                <button class="btn btn-secondary">Filter Patients</button>
+                <button class="btn btn-primary">Add Patient</button>
+            </div>
+        </div>
 
+        <div class="dashboard-grid">
+            <!-- Patient Card 1 -->
+            <div class="patient-card">
+                <div class="patient-card-header">
+                    <div class="patient-info">
+                        <div class="patient-avatar">JD</div>
+                        <div class="patient-name-info">
+                            <h3>John Doe</h3>
+                            <div class="patient-id">ID: P-0012435</div>
+                        </div>
+                    </div>
+                    <span class="status-badge status-stable">Stable</span>
+                </div>
+                <div class="vital-signs">
+                    <div class="vital-metric">
+                        <div class="vital-label">❤️ Heart Rate</div>
+                        <div class="vital-value">72 <span class="vital-unit">BPM</span> <span class="vital-trend trend-stable">◉</span> <span class="alert-indicator alert-normal"></span></div>
+                    </div>
+                    <div class="vital-metric">
+                        <div class="vital-label">🩸 Blood Pressure</div>
+                        <div class="vital-value">124/82 <span class="vital-unit">mmHg</span> <span class="vital-trend trend-up">▲</span> <span class="alert-indicator alert-normal"></span></div>
+                    </div>
+                    <div class="vital-metric">
+                        <div class="vital-label">🫁 Resp. Rate</div>
+                        <div class="vital-value">16 <span class="vital-unit">BPM</span> <span class="vital-trend trend-stable">◉</span> <span class="alert-indicator alert-normal"></span></div>
+                    </div>
+                    <div class="vital-metric">
+                        <div class="vital-label">🌡️ Temperature</div>
+                        <div class="vital-value">98.6 <span class="vital-unit">°F</span> <span class="vital-trend trend-stable">◉</span> <span class="alert-indicator alert-normal"></span></div>
+                    </div>
+                </div>
+                <div class="patient-card-footer">
+                    <div class="footer-action">View Details</div>
+                    <div class="footer-action">Update Vitals</div>
+                    <div class="footer-action">Notes</div>
+                </div>
+            </div>
 
+            <!-- Patient Card 2 -->
+            <div class="patient-card">
+                <div class="patient-card-header">
+                    <div class="patient-info">
+                        <div class="patient-avatar">MS</div>
+                        <div class="patient-name-info">
+                            <h3>Maria Smith</h3>
+                            <div class="patient-id">ID: P-0023567</div>
+                        </div>
+                    </div>
+                    <span class="status-badge status-warning">Caution</span>
+                </div>
+                <div class="vital-signs">
+                    <div class="vital-metric">
+                        <div class="vital-label">❤️ Heart Rate</div>
+                        <div class="vital-value">92 <span class="vital-unit">BPM</span> <span class="vital-trend trend-up">▲</span> <span class="alert-indicator alert-warning"></span></div>
+                    </div>
+                    <div class="vital-metric">
+                        <div class="vital-label">🩸 Blood Pressure</div>
+                        <div class="vital-value">145/95 <span class="vital-unit">mmHg</span> <span class="vital-trend trend-up">▲</span> <span class="alert-indicator alert-warning"></span></div>
+                    </div>
+                    <div class="vital-metric">
+                        <div class="vital-label">🫁 Resp. Rate</div>
+                        <div class="vital-value">18 <span class="vital-unit">BPM</span> <span class="vital-trend trend-up">▲</span> <span class="alert-indicator alert-normal"></span></div>
+                    </div>
+                    <div class="vital-metric">
+                        <div class="vital-label">🌡️ Temperature</div>
+                        <div class="vital-value">99.8 <span class="vital-unit">°F</span> <span class="vital-trend trend-up">▲</span> <span class="alert-indicator alert-warning"></span></div>
+                    </div>
+                </div>
+                <div class="patient-card-footer">
+                    <div class="footer-action">View Details</div>
+                    <div class="footer-action">Update Vitals</div>
+                    <div class="footer-action">Notes</div>
+                </div>
+            </div>
+
+            <!-- Patient Card 3 -->
+            <div class="patient-card">
+                <div class="patient-card-header">
+                    <div class="patient-info">
+                        <div class="patient-avatar">RJ</div>
+                        <div class="patient-name-info">
+                            <h3>Robert Johnson</h3>
+                            <div class="patient-id">ID: P-0034218</div>
+                        </div>
+                    </div>
+                    <span class="status-badge status-critical">Critical</span>
+                </div>
+                <div class="vital-signs">
+                    <div class="vital-metric">
+                        <div class="vital-label">❤️ Heart Rate</div>
+                        <div class="vital-value">124 <span class="vital-unit">BPM</span> <span class="vital-trend trend-up">▲</span> <span class="alert-indicator alert-danger"></span></div>
+                    </div>
+                    <div class="vital-metric">
+                        <div class="vital-label">🩸 Blood Pressure</div>
+                        <div class="vital-value">175/110 <span class="vital-unit">mmHg</span> <span class="vital-trend trend-up">▲</span> <span class="alert-indicator alert-danger"></span></div>
+                    </div>
+                    <div class="vital-metric">
+                        <div class="vital-label">🫁 Resp. Rate</div>
+                        <div class="vital-value">24 <span class="vital-unit">BPM</span> <span class="vital-trend trend-up">▲</span> <span class="alert-indicator alert-danger"></span></div>
+                    </div>
+                    <div class="vital-metric">
+                        <div class="vital-label">🌡️ Temperature</div>
+                        <div class="vital-value">102.3 <span class="vital-unit">°F</span> <span class="vital-trend trend-up">▲</span> <span class="alert-indicator alert-danger"></span></div>
+                    </div>
+                </div>
+                <div class="patient-card-footer">
+                    <div class="footer-action">View Details</div>
+                    <div class="footer-action">Update Vitals</div>
+                    <div class="footer-action">Notes</div>
+                </div>
+            </div>
+        </div>
+    </main>
     
     <footer>
         <p>&copy; 2025 Interactive Webpage. All rights reserved.</p>
     </footer>
     <script src="{% static 'script.js' %}"></script>
+    <script>
+        // Simple script to update the "last updated" time
+        function updateLastUpdated() {
+            const now = new Date();
+            const options = { 
+                month: 'long', 
+                day: 'numeric', 
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('last-updated').textContent = now.toLocaleDateString('en-US', options);
+        }
+        
+        // Update every minute
+        setInterval(updateLastUpdated, 60000);
+        
+        // Initial update
+        updateLastUpdated();
+    </script>
 </body>
 </html>
