@@ -63,7 +63,7 @@ ROOT_URLCONF = 'trydjango.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['C:/Users/aj/Documents/GitHub/HACKATHONPROJECT/myproject/Template'],
+        'DIRS': ['C:/Users/aj/Documents/GitHub/HACKATHONPROJECT2/myproject/Template'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
