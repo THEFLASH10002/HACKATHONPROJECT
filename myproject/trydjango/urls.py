@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
+from pages import views
 
 from pages.views import home_view, service_opportunities_view, service_match_view, social_view
 
@@ -25,4 +25,5 @@ urlpatterns = [
     path('Patients/', service_match_view, name='Patients'), 
     path('service-match/', service_match_view, name='service_match'),
     path('new patients/', social_view, name='new_patients'),  # Service Match
+    path('api/predict/', views.predict_risk, name='predict_risk')
 ]

@@ -242,7 +242,7 @@ nav {
 .hero-banner {
     flex: 1; /* Equal width for each banner */
     max-width: 400px; /* Limit the maximum width */
-    height: 550px; /* Fixed height for consistency */
+    height: 620px; /* Fixed height for consistency */
     display: flex;
     flex-direction: column;
     justify-content: flex-end; /* Move content to the bottom */

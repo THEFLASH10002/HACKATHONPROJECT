@@ -29,17 +29,12 @@ function getStatus(vitals) {
 function calculateRiskScore(vitals) {
     const { hr, bpS, bpD, spo2 } = vitals;
     let score = 0;
-
     if (hr < 60 || hr > 100) score += 10;
     if (bpS < 90 || bpS > 130) score += 10;
     if (bpD < 60 || bpD > 85) score += 10;
     if (spo2 < 94) score += 10;
-
-    if ((hr < 60 || hr > 100) && spo2 < 94 && (bpS < 90 || bpS > 130)) {
-        score += 10; // composite penalty
-    }
-
-    return score; // out of 50
+    if ((hr < 60 || hr > 100) && spo2 < 94 && (bpS < 90 || bpS > 130)) score += 10;
+    return score;
 }
 
 function getRandomInt(min, max) {
@@ -105,74 +100,91 @@ function updateCombinedChart(billy, ava, zara) {
 
     combinedChart.update();
 }
-document.addEventListener("DOMContentLoaded", function () {
-    initCombinedChart();
-    updateVitals();
-    setInterval(updateVitals, 3000); // updates every 3 seconds
-});
+
 // --- Live Vitals ---
 function updateVitals() {
     const patients = [
         {
             key: 'billy',
             vitals: {
-                hr: getRandomInt(60, 100),
-                bpS: getRandomInt(90, 130),
-                bpD: getRandomInt(60, 85),
-                spo2: getRandomInt(93, 100)
+                hr: getRandomInt(65, 95),          
+                bpS: getRandomInt(92, 125),         
+                bpD: getRandomInt(62, 85),         
+                spo2: getRandomInt(95, 99)          
             }
         },
         {
             key: 'ava',
             vitals: {
-                hr: getRandomInt(60, 110),
-                bpS: getRandomInt(88, 140),
-                bpD: getRandomInt(58, 90),
-                spo2: getRandomInt(92, 100)
+                hr: getRandomInt(63, 100),         
+                bpS: getRandomInt(90, 130),        
+                bpD: getRandomInt(60, 90),         
+                spo2: getRandomInt(94, 100)        
             }
         },
         {
             key: 'zara',
             vitals: {
-                hr: getRandomInt(58, 105),
-                bpS: getRandomInt(85, 135),
-                bpD: getRandomInt(55, 88),
-                spo2: getRandomInt(90, 100)
+                hr: getRandomInt(60, 100),         
+                bpS: getRandomInt(88, 128),       
+                bpD: getRandomInt(60, 85),          
+                spo2: getRandomInt(93, 99)          
             }
         }
     ];
 
+
     patients.forEach(({ key, vitals }) => {
-        // Update vitals text
+        // Update DOM
         document.getElementById(`hr-${key}`).textContent = vitals.hr;
         document.getElementById(`bp-${key}`).textContent = `${vitals.bpS}/${vitals.bpD}`;
         document.getElementById(`spo2-${key}`).textContent = vitals.spo2;
 
-        // Calculate and display risk
         const risk = calculateRiskScore(vitals);
         document.getElementById(`risk-${key}`).textContent = `Risk Score: ${risk}`;
 
-        // Update aura class
         const banner = document.querySelector(`.hero-banner.${key}`);
         banner.classList.remove('healthy', 'warning', 'critical');
+        banner.classList.add(getStatus(vitals));
 
-        if (risk <= 20) {
-            banner.classList.add('healthy');
-        } else if (risk <= 40) {
-            banner.classList.add('warning');
-        } else {
-            banner.classList.add('critical');
-        }
+        // --- Predictive Risk via Django API ---
+        fetch("/api/predict/", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(vitals)
+        })
+        .then(res => res.json())
+        .then(data => {
+            const pred = data.risk_level;
+            const statusElem = document.getElementById(`status-${key}`);
+            if (!statusElem) return;
+
+            if (pred === 0) {
+                statusElem.textContent = "🟢 Predicted: Healthy";
+                statusElem.style.color = "green";
+            } else if (pred === 1) {
+                statusElem.textContent = "🟠 Predicted: Warning";
+                statusElem.style.color = "orange";
+                alert(`⚠️ ${key.toUpperCase()} is in a warning state! Check vitals soon.`);
+            } else {
+                statusElem.textContent = "🔴 Predicted: Critical";
+                statusElem.style.color = "red";
+                alert(`🚨 CRITICAL: ${key.toUpperCase()} needs urgent attention!`);
+            }
+        });
     });
 
-    // Update the chart
     updateCombinedChart(
         patients[0].vitals,
         patients[1].vitals,
         patients[2].vitals
     );
-
-
-    
 }
 
+// --- Init ---
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("Vitals system loaded ✅");
+    initCombinedChart();
+    updateVitals();
+    setInterval(updateVitals, 3000);
+});
