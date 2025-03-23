@@ -25,7 +25,7 @@ img{
     width: 10px;
     height: 10px;
     margin-left: 8px;
-    background-color: #4CAF50; /* Green for live status */
+    background-color: #48ae4b; /* Green for live status */
     border-radius: 50%;
     box-shadow: 0 0 5px #4CAF50;
     animation: pulse 1.5s infinite ease-in-out;
@@ -66,7 +66,7 @@ section {
 /* Section Hover Effects */
 section:hover {
     transform: translateY(-5px); /* Lift on hover */
-    box-shadow: 0 8px 20px rgba(255, 7, 58, 0.8), 0 8px 20px rgba(75, 0, 130, 0.8); /* Vibrant shadow */
+    box-shadow: 0 8px 20px rgba(7, 255, 19, 0.8), 0 8px 20px rgba(7, 255, 19, 0.8); /* Vibrant shadow */
     filter: brightness(1.4); /* Brighten on hover */
 }
 
@@ -301,7 +301,7 @@ nav {
 
 .hero-banner:hover {
     transform: translateY(-5px); /* Lift the banner slightly on hover */
-    box-shadow: 0 8px 20px rgba(255, 7, 58, 0.8), 0 8px 20px rgba(75, 0, 130, 0.8); /* Vibrant shadow */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8), 0 8px 20px rgba(0, 0, 0, 0.8); /* Vibrant shadow */
 }
 
 /* Text Inside Hero Banner */
@@ -416,8 +416,10 @@ main {
 }
 
 #chatbot-icon img {
-    width: 40px;
-    height: 40px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 /* Ensure Chatbot is Above Hero Banners */
@@ -1036,4 +1038,28 @@ body {
       border-right: none;
       border-bottom: 1px solid rgba(255,255,255,0.1);
     }
+
+    .risk-display {
+      font-weight: bold;
+      margin-top: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      color: white;
+      text-align: center;
+  }
+  
+  .healthy .risk-display {
+      background-color: #4CAF50; /* green */
+  }
+  
+  .warning .risk-display {
+      background-color: #FFA726; /* orange */
+  }
+  
+  .critical .risk-display {
+      background-color: #FF4C4C; /* red */
+  }
+  
+
+
   }
