@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bison Serve</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+</head>
+<body>
+    <nav>
+        <img src="{% static 'images/slogo.png' %}" alt="Small Cardio Sync Logo">
+        <a href="{% url 'home' %}" class="nav-link">Home</a>
+        <a href="{% url 'Patients' %}" class="nav-link">Patients</a>
+        <a href="{% url 'service_opportunities' %}" class="nav-link">Find-A-Tutor</a>
+        <a href="{% url 'new_patients' %}" class="nav-link">New Patients</a>
+    </nav>
+
+    
+    
+    
+
+
+    
+    <footer>
+        <p>&copy; 2025 Interactive Webpage. All rights reserved.</p>
+    </footer>
+    <script src="{% static 'script.js' %}"></script>
+</body>
+</html>

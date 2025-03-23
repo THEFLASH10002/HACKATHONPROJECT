@@ -6,7 +6,6 @@ document.querySelectorAll(".nav-link").forEach(link => {
         const targetId = link.getAttribute("href").substring(1);
         const targetElement = document.getElementById(targetId);
 
-        // ✅ Check if target element exists before scrolling
         if (targetElement) {
             event.preventDefault();
             targetElement.scrollIntoView({ behavior: "smooth" });
@@ -16,9 +15,89 @@ document.querySelectorAll(".nav-link").forEach(link => {
     });
 });
 
-// Simulated live vitals updater
+function getStatus(vitals) {
+    const { hr, bpS, bpD, spo2 } = vitals;
+    const hrOk = hr >= 60 && hr <= 100;
+    const bpOk = bpS >= 90 && bpS <= 120 && bpD >= 60 && bpD <= 80;
+    const spo2Ok = spo2 >= 95;
+    const okCount = [hrOk, bpOk, spo2Ok].filter(Boolean).length;
+
+    if (okCount === 3) return 'healthy';
+    if (okCount === 2) return 'warning';
+    return 'critical';
+}
+
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+let combinedChart;
+
+function initCombinedChart() {
+    const ctx = document.getElementById('combined-chart').getContext('2d');
+    combinedChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [
+                {
+                    label: 'Avg Heart Rate (BPM)',
+                    data: [],
+                    borderColor: '#ff5733',
+                    backgroundColor: 'rgba(255, 87, 51, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                },
+                {
+                    label: 'Avg SpO₂ (%)',
+                    data: [],
+                    borderColor: '#33cc33',
+                    backgroundColor: 'rgba(51, 204, 51, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: false
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                }
+            }
+        }
+    });
+}
+
+function updateCombinedChart(billy, ava, zara) {
+    const time = new Date().toLocaleTimeString();
+    const avgHR = Math.round((billy.hr + ava.hr + zara.hr) / 3);
+    const avgSpO2 = Math.round((billy.spo2 + ava.spo2 + zara.spo2) / 3);
+
+    const maxDataPoints = 12;
+    const labels = combinedChart.data.labels;
+    const hrData = combinedChart.data.datasets[0].data;
+    const spo2Data = combinedChart.data.datasets[1].data;
+
+    if (labels.length >= maxDataPoints) {
+        labels.shift();
+        hrData.shift();
+        spo2Data.shift();
+    }
+
+    labels.push(time);
+    hrData.push(avgHR);
+    spo2Data.push(avgSpO2);
+
+    combinedChart.update();
+}
+
 function updateVitals() {
-    // === BILLY ===
     const billyVitals = {
         hr: getRandomInt(60, 100),
         bpS: getRandomInt(90, 130),
@@ -26,16 +105,6 @@ function updateVitals() {
         spo2: getRandomInt(93, 100)
     };
 
-    document.getElementById('hr-billy').textContent = billyVitals.hr;
-    document.getElementById('bp-billy').textContent = `${billyVitals.bpS}/${billyVitals.bpD}`;
-    document.getElementById('spo2-billy').textContent = billyVitals.spo2;
-
-    const billyStatus = getStatus(billyVitals);
-    const billyBanner = document.querySelector('.hero-banner.billy');
-    billyBanner.classList.remove('healthy', 'warning', 'critical');
-    billyBanner.classList.add(billyStatus);
-
-    // === AVA ===
     const avaVitals = {
         hr: getRandomInt(60, 110),
         bpS: getRandomInt(88, 140),
@@ -43,31 +112,6 @@ function updateVitals() {
         spo2: getRandomInt(92, 100)
     };
 
-    function getStatus(vitals) {
-        const { hr, bpS, bpD, spo2 } = vitals;
-    
-        const hrOk = hr >= 60 && hr <= 100;
-        const bpOk = bpS >= 90 && bpS <= 120 && bpD >= 60 && bpD <= 80;
-        const spo2Ok = spo2 >= 95;
-    
-        const okCount = [hrOk, bpOk, spo2Ok].filter(Boolean).length;
-    
-        if (okCount === 3) return 'healthy';
-        if (okCount === 2) return 'warning';
-        return 'critical';
-    }
-    
-
-    document.getElementById('hr-ava').textContent = avaVitals.hr;
-    document.getElementById('bp-ava').textContent = `${avaVitals.bpS}/${avaVitals.bpD}`;
-    document.getElementById('spo2-ava').textContent = avaVitals.spo2;
-
-    const avaStatus = getStatus(avaVitals);
-    const avaBanner = document.querySelector('.hero-banner.ava');
-    avaBanner.classList.remove('healthy', 'warning', 'critical');
-    avaBanner.classList.add(avaStatus);
-
-    // === ZARA ===
     const zaraVitals = {
         hr: getRandomInt(58, 105),
         bpS: getRandomInt(85, 135),
@@ -75,73 +119,62 @@ function updateVitals() {
         spo2: getRandomInt(90, 100)
     };
 
-    document.getElementById('hr-zara').textContent = zaraVitals.hr;
-    document.getElementById('bp-zara').textContent = `${zaraVitals.bpS}/${zaraVitals.bpD}`;
-    document.getElementById('spo2-zara').textContent = zaraVitals.spo2;
+    const patients = [
+        { key: 'billy', vitals: billyVitals },
+        { key: 'ava', vitals: avaVitals },
+        { key: 'zara', vitals: zaraVitals }
+    ];
 
-    const zaraStatus = getStatus(zaraVitals);
-    const zaraBanner = document.querySelector('.hero-banner.zara');
-    zaraBanner.classList.remove('healthy', 'warning', 'critical');
-    zaraBanner.classList.add(zaraStatus);
+    patients.forEach(({ key, vitals }) => {
+        document.getElementById(`hr-${key}`).textContent = vitals.hr;
+        document.getElementById(`bp-${key}`).textContent = `${vitals.bpS}/${vitals.bpD}`;
+        document.getElementById(`spo2-${key}`).textContent = vitals.spo2;
+
+        const banner = document.querySelector(`.hero-banner.${key}`);
+        banner.classList.remove('healthy', 'warning', 'critical');
+        banner.classList.add(getStatus(vitals));
+    });
+
+    updateCombinedChart(billyVitals, avaVitals, zaraVitals);
 }
 
-
-// Helper function
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-// Start the live update loop
-setInterval(updateVitals, 3000);
-
-
-
-// Start the animation
 document.addEventListener("DOMContentLoaded", function () {
     console.log("JavaScript Loaded");
 
-    // Toggle Chatbot Visibility
+    initCombinedChart();
+    updateVitals();
+    setInterval(updateVitals, 3000);
+
     function toggleChatbot() {
         const chatbotBox = document.getElementById("chatbot-container");
         chatbotBox.style.display = chatbotBox.style.display === "none" ? "block" : "none";
     }
 
-    // AI Chatbot Functionality
     async function sendMessage() {
         let userInput = document.getElementById("userInput").value.trim();
         let chatbox = document.getElementById("chatbox");
 
-        if (userInput === "") return; // Prevent empty messages
+        if (userInput === "") return;
 
-        // Display user message
         chatbox.innerHTML += `<p style="text-align: right;"><strong>You:</strong> ${userInput}</p>`;
-        document.getElementById("userInput").value = ""; // Clear input
+        document.getElementById("userInput").value = "";
 
         try {
-            // ✅ Correct API Endpoint
             let response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
                 method: "POST",
-                headers: { 
-                    "Authorization": "Bearer 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", 
+                headers: {
+                    "Authorization": "Bearer YOUR_API_KEY",
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    model: "mistralai/mistral-7b-instruct", // ✅ Use a valid OpenRouter model
+                    model: "mistralai/mistral-7b-instruct",
                     messages: [{ role: "user", content: userInput }]
                 })
             });
 
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
+            if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
             let data = await response.json();
-            console.log("API Response:", data);
-
-            // ✅ Extract the correct chatbot response format
             let botReply = data.choices?.[0]?.message?.content || "I'm still learning. Can you rephrase?";
-            
-            // Display bot response
             chatbox.innerHTML += `<p style="text-align: left;"><strong>Bot:</strong> ${botReply}</p>`;
 
         } catch (error) {
@@ -149,11 +182,9 @@ document.addEventListener("DOMContentLoaded", function () {
             chatbox.innerHTML += `<p style="text-align: left; color: red;"><strong>Bot:</strong> Error: Could not get a response.</p>`;
         }
 
-        chatbox.scrollTop = chatbox.scrollHeight; // Auto-scroll
+        chatbox.scrollTop = chatbox.scrollHeight;
     }
 
-
-    // Attach event listeners
     document.getElementById("chatbot-icon").addEventListener("click", toggleChatbot);
     document.getElementById("userInput").addEventListener("keypress", function(event) {
         if (event.key === "Enter") {
@@ -161,9 +192,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // ✅ Make functions globally available
     window.sendMessage = sendMessage;
     window.toggleChatbot = toggleChatbot;
-
-
 });
