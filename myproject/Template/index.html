@@ -2,53 +2,563 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cardio Sync</title>
-    <title>Cardio Sync</title>
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cardio Sync</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <style>
+    :root {
+      --primary-color: #e63946;
+      --primary-light: #ff6b6b;
+      --primary-dark: #c1121f;
+      --secondary-color: #457b9d;
+      --dark-color: #1d3557;
+      --light-color: #f1faee;
+      --accent-color: #a8dadc;
+      --success-color: #2ecc71;
+      --warning-color: #f39c12;
+      --gradient-primary: linear-gradient(135deg, #e63946 0%, #d62828 100%);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background-color: #f8f9fa;
+      color: var(--dark-color);
+      line-height: 1.6;
+    }
+    
+    nav {
+      background-color: white;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+      padding: 1rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 100;
+      transition: all 0.3s ease;
+    }
+    
+    nav.scrolled {
+      padding: 0.5rem 5%;
+      background-color: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+    }
+    
+    .nav-left {
+      display: flex;
+      align-items: center;
+    }
+    
+    .nav-left img {
+      height: 40px;
+      margin-right: 1rem;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-left h1 {
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      font-weight: 700;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+    
+    .nav-link {
+      text-decoration: none;
+      color: var(--dark-color);
+      font-weight: 500;
+      position: relative;
+      padding: 0.5rem 0;
+      transition: color 0.3s;
+    }
+    
+    .nav-link:after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: var(--primary-color);
+      transition: width 0.3s ease, background-color 0.3s ease;
+    }
+    
+    .nav-link:hover {
+      color: var(--primary-color);
+    }
+    
+    .nav-link:hover:after {
+      width: 100%;
+    }
+    
+    .hero {
+      height: 60vh;
+      background: linear-gradient(rgba(29, 53, 87, 0.7), rgba(29, 53, 87, 0.7)), url('{% static "images/cardio-background.jpg" %}');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-align: center;
+      margin-top: 70px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      padding: 2rem;
+    }
+    
+    .hero-content h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    
+    .hero-content p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      margin-bottom: 2rem;
+    }
+    
+    .hero-btn {
+      background: var(--gradient-primary);
+      color: white;
+      border: none;
+      padding: 0.8rem 2rem;
+      font-size: 1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: 0 4px 15px rgba(230, 57, 70, 0.4);
+    }
+    
+    .hero-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(230, 57, 70, 0.6);
+    }
+    
+    .welcome-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+      text-align: center;
+      position: relative;
+    }
+    
+    .welcome-text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem;
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      margin-top: -100px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .welcome-text::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: var(--gradient-primary);
+    }
+    
+    .welcome-text h1 {
+      color: var(--primary-color);
+      margin-bottom: 1.5rem;
+      font-size: 2.5rem;
+    }
+    
+    .welcome-text img {
+      height: 130px;
+      margin: 1.5rem 0;
+      filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1));
+      transition: transform 0.5s ease;
+    }
+    
+    .welcome-text img:hover {
+      transform: scale(1.05);
+    }
+    
+    .welcome-text h2 {
+      color: var(--secondary-color);
+      margin-bottom: 2.5rem;
+      font-weight: 400;
+      font-size: 1.3rem;
+    }
+    
+    .buttons-container {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+    
+    .custom-button {
+      background: var(--gradient-primary);
+      color: white;
+      border: none;
+      padding: 1rem 2.5rem;
+      font-size: 1.1rem;
+      cursor: pointer;
+      border-radius: 30px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(230, 57, 70, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    
+    .custom-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 75%);
+      transition: left 0.6s ease;
+      z-index: -1;
+    }
+    
+    .custom-button:hover::before {
+      left: 100%;
+    }
+    
+    .custom-button svg {
+      width: 22px;
+      height: 22px;
+    }
+    
+    .custom-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(230, 57, 70, 0.4);
+    }
+    
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.7);
+      }
+      70% {
+        box-shadow: 0 0 0 15px rgba(230, 57, 70, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(230, 57, 70, 0);
+      }
+    }
+    
+    .features-section {
+      background: linear-gradient(to right, rgba(29, 53, 87, 0.95), rgba(69, 123, 157, 0.95));
+      padding: 0;
+      margin-top: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .features-section::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background: url('{% static "images/heartbeat-pattern.png" %}') repeat;
+      opacity: 0.03;
+    }
+    
+    .features-grid {
+      display: flex;
+      width: 100%;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .feature-card {
+      flex: 1;
+      padding: 4rem 2rem;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    
+    .feature-card:not(:last-child) {
+      border-right: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .feature-icon-container {
+      width: 80px;
+      height: 80px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    
+    .feature-card:hover .feature-icon-container {
+      background: var(--primary-color);
+      transform: translateY(-5px);
+    }
+    
+    .feature-icon-container svg {
+      width: 40px;
+      height: 40px;
+      stroke: white;
+      transition: all 0.3s ease;
+    }
+    
+    .feature-card h3 {
+      color: white;
+      margin-bottom: 1rem;
+      font-size: 1.4rem;
+      position: relative;
+      padding-bottom: 15px;
+    }
+    
+    .feature-card h3:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 3px;
+      background: var(--primary-color);
+      transition: width 0.3s ease;
+    }
+    
+    .feature-card:hover h3:after {
+      width: 60px;
+    }
+    
+    .feature-card p {
+      color: rgba(255,255,255,0.8);
+      font-size: 1rem;
+      max-width: 300px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    
+    .heartbeat {
+      animation: heartbeat 1.5s ease-in-out infinite both;
+    }
+    
+    @keyframes heartbeat {
+      from {
+        transform: scale(1);
+        transform-origin: center center;
+        animation-timing-function: ease-out;
+      }
+      10% {
+        transform: scale(0.91);
+        animation-timing-function: ease-in;
+      }
+      17% {
+        transform: scale(0.98);
+        animation-timing-function: ease-out;
+      }
+      33% {
+        transform: scale(0.87);
+        animation-timing-function: ease-in;
+      }
+      45% {
+        transform: scale(1);
+        animation-timing-function: ease-out;
+      }
+    }
+    
+    footer {
+      background-color: var(--dark-color);
+      color: white;
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    @media (max-width: 768px) {
+      .nav-links {
+        gap: 1rem;
+      }
+      
+      .hero {
+        height: 50vh;
+      }
+      
+      .hero-content h1 {
+        font-size: 2.2rem;
+      }
+      
+      .welcome-text {
+        margin-top: -50px;
+        padding: 2rem 1.5rem;
+      }
+      
+      .welcome-text h1 {
+        font-size: 2rem;
+      }
+      
+      .welcome-text img {
+        height: 100px;
+      }
+      
+      .buttons-container {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .features-grid {
+        flex-direction: column;
+      }
+      
+      .feature-card:not(:last-child) {
+        border-right: none;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+      }
+    }
+  </style>
 </head>
 <body>
-    <nav>
-        <div class="nav-left">
-            <img src="{% static 'images/slogo.png' %}" alt="Small Cardio Sync Logo">
-            <h1>Cardio Sync</h1>
-        </div>
-        <div class="nav-links">
-            <a href="{% url 'home' %}" class="nav-link">Home</a>
-            <a href="{% url 'Patients' %}" class="nav-link"> Current Patients</a>
-        </div>
-    </nav>
-    
-    
-    <header class="hero">
-       
-    </header>
-    <div class="welcome-text">
-        <h1> Welcome to Cardio Sync</h1>
-        <img src="{% static 'images/logo.png' %}" alt="Cardio Sync Logo">
-        <h2> Your trusted ally for monitoring your patients heart rates</h2>
-        <button class="custom-button">Click Me</button>
-        <button class="custom-button">Learn More</button>
-        <style>
-            .custom-button {
-                background-color: #007bff;
-                color: white;
-                border: none;
-                padding: 50px 100px;
-                font-size: 16px;
-                cursor: pointer;
-                border-radius: 5px;
-            }
-            .custom-button:hover {
-                background-color: #0056b3;
-            }
-        </style>
-       
+  <nav id="mainNav">
+    <div class="nav-left">
+      <img src="{% static 'images/slogo.png' %}" alt="Small Cardio Sync Logo">
+      <h1>Cardio Sync</h1>
     </div>
-    <footer>
-        <p>&copy; 2025 Interactive Webpage. All rights reserved.</p>
-    </footer>
-    <script src="{% static 'script.js' %}"></script>
+    <div class="nav-links">
+      <a href="{% url 'home' %}" class="nav-link">Home</a>
+      <a href="{% url 'Patients' %}" class="nav-link">Current Patients</a>
+    </div>
+  </nav>
+  
+  <header class="hero">
+    <div class="hero-content">
+      <h1>Advanced Cardiac Monitoring Solutions</h1>
+      <p>Empowering healthcare professionals with real-time, reliable patient data for better clinical decisions</p>
+      <a href="{% url 'Patients' %}" class="hero-btn">Get Started</a>
+    </div>
+  </header>
+  
+  <div class="welcome-container">
+    <div class="welcome-text">
+      <h1>Welcome to Cardio Sync</h1>
+      <img src="{% static 'images/logo.png' %}" alt="Cardio Sync Logo">
+      <h2>Your trusted ally for monitoring your patients' heart rates</h2>
+      
+      <div class="buttons-container">
+        <button class="custom-button pulse">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+          </svg>
+          New Patients
+        </button>
+        <button class="custom-button">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+          Current Patients
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <section class="features-section">
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon-container">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="heartbeat">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          </svg>
+        </div>
+        <h3>Real-time Monitoring</h3>
+        <p>Track your patients' cardiac data in real-time with our advanced monitoring system for immediate insights and proactive care.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-container">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+          </svg>
+        </div>
+        <h3>Comprehensive Analytics</h3>
+        <p>Get detailed insights and trends to make informed clinical decisions with our powerful data visualization tools.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-container">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+          </svg>
+        </div>
+        <h3>Alert System</h3>
+        <p>Receive immediate notifications for critical changes in patient conditions to enable rapid response when needed.</p>
+      </div>
+    </div>
+  </section>
+  
+  <footer>
+    <p>&copy; 2025 Cardio Sync. All rights reserved.</p>
+  </footer>
+  
+  <script src="{% static 'script.js' %}"></script>
+  <script>
+    // Add scroll effect to navbar
+    window.addEventListener('scroll', function() {
+      const nav = document.getElementById('mainNav');
+      if (window.scrollY > 50) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+  </script>
 </body>
 </html>

@@ -1,3 +1,8 @@
+img{
+    background: transparent;
+    border: none;    
+}
+
 /* Welcome Text Styles */
 .welcome-text {
     width: 100%; /* Full-width section */
