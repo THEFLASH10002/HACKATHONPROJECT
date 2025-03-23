@@ -248,6 +248,7 @@
       position: relative;
       overflow: hidden;
       z-index: 1;
+      text-decoration: none;
     }
     
     .custom-button::before {
@@ -523,18 +524,19 @@
       <h2>Your trusted ally for monitoring your patients' heart rates</h2>
       
       <div class="buttons-container">
-        <button class="custom-button pulse">
+        <!-- Changed button to anchor with the same URL -->
+        <a href="{% url 'Patients' %}" class="custom-button pulse">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
           </svg>
           New Patients
-        </button>
-        <button class="custom-button">
+        </a>
+        <a href="{% url 'Patients' %}" class="custom-button">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
           </svg>
           Current Patients
-        </button>
+        </a>
       </div>
     </div>
   </div>
