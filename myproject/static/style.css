@@ -894,6 +894,7 @@ body {
   }
   
   .feature-card {
+    display: flex;
     flex: 1;
     padding: 4rem 2rem;
     transition: all 0.4s ease;
