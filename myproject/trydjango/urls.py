@@ -24,5 +24,5 @@ urlpatterns = [
     path('service-opportunities/', service_opportunities_view, name='service_opportunities'),  # Service Opportunities
     path('Patients/', service_match_view, name='Patients'), 
     path('service-match/', service_match_view, name='service_match'),
-    path('new -patients/', social_view, name='new_patients'),  # Service Match
+    path('new patients/', social_view, name='new_patients'),  # Service Match
 ]
