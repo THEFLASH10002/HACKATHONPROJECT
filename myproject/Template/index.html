@@ -248,6 +248,7 @@
       position: relative;
       overflow: hidden;
       z-index: 1;
+      text-decoration: none;
     }
     
     .custom-button::before {
@@ -292,105 +293,115 @@
       }
     }
     
+    /* Updated Features Section */
     .features-section {
       background: linear-gradient(to right, rgba(29, 53, 87, 0.95), rgba(69, 123, 157, 0.95));
       padding: 0;
       margin-top: 4rem;
       position: relative;
       overflow: hidden;
+      width: 100%;
     }
     
     .features-section::before {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      background: url('{% static "images/heartbeat-pattern.png" %}') repeat;
-      opacity: 0.03;
-    }
-    
-    .features-grid {
-      display: flex;
-      width: 100%;
-      position: relative;
-      z-index: 2;
-    }
-    
-    .feature-card {
-      flex: 1;
-      padding: 4rem 2rem;
-      transition: all 0.4s ease;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-    
-    .feature-card:not(:last-child) {
-      border-right: 1px solid rgba(255,255,255,0.1);
-    }
-    
-    .feature-icon-container {
-      width: 80px;
-      height: 80px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1.5rem;
-      position: relative;
-      transition: all 0.3s ease;
-    }
-    
-    .feature-card:hover .feature-icon-container {
-      background: var(--primary-color);
-      transform: translateY(-5px);
-    }
-    
-    .feature-icon-container svg {
-      width: 40px;
-      height: 40px;
-      stroke: white;
-      transition: all 0.3s ease;
-    }
-    
-    .feature-card h3 {
-      color: white;
-      margin-bottom: 1rem;
-      font-size: 1.4rem;
-      position: relative;
-      padding-bottom: 15px;
-    }
-    
-    .feature-card h3:after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 40px;
-      height: 3px;
-      background: var(--primary-color);
-      transition: width 0.3s ease;
-    }
-    
-    .feature-card:hover h3:after {
-      width: 60px;
-    }
-    
-    .feature-card p {
-      color: rgba(255,255,255,0.8);
-      font-size: 1rem;
-      max-width: 300px;
-      margin: 0 auto;
-      line-height: 1.6;
-    }
-    
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: url('{% static "images/heartbeat-pattern.png" %}') repeat;
+  opacity: 0.03;
+}
+
+/* UPDATED: Adjusted layout to make feature cards stretch across the screen */
+.features-grid {
+  display: flex;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+  flex-wrap: wrap; /* Allow cards to wrap */
+  gap: 2rem; /* Space between cards */
+  justify-content: space-between; /* Distribute cards evenly */
+}
+
+/* UPDATED: Allow feature cards to stretch across the screen */
+.feature-card {
+  flex: 1;
+  min-width: calc(33.333% - 2rem); /* Ensure three cards per row, accounting for space */
+  padding: 4rem 2rem;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box; /* Include padding in width calculations */
+}
+
+/* Space between feature cards (applies to all cards except the last) */
+.feature-card:not(:last-child) {
+  border-right: 1px solid rgba(255,255,255,0.1);
+}
+
+.feature-icon-container {
+  width: 80px;
+  height: 80px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover .feature-icon-container {
+  background: var(--primary-color);
+  transform: translateY(-5px);
+}
+
+.feature-icon-container svg {
+  width: 40px;
+  height: 40px;
+  stroke: white;
+  transition: all 0.3s ease;
+}
+
+.feature-card h3 {
+  color: white;
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.feature-card h3:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 3px;
+  background: var(--primary-color);
+  transition: width 0.3s ease;
+}
+
+.feature-card:hover h3:after {
+  width: 60px;
+}
+
+.feature-card p {
+  color: rgba(255,255,255,0.8);
+  font-size: 1rem;
+  max-width: 300px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
     .heartbeat {
       animation: heartbeat 1.5s ease-in-out infinite both;
     }
@@ -427,6 +438,7 @@
       border-top: 1px solid rgba(255,255,255,0.1);
     }
     
+    /* Updated media queries for feature cards */
     @media (max-width: 768px) {
       .nav-links {
         gap: 1rem;
@@ -458,13 +470,31 @@
         gap: 1rem;
       }
       
+      /* UPDATED: Changed for full width feature cards on mobile */
       .features-grid {
-        flex-direction: column;
+        flex-direction: column; /* Stack vertically on mobile */
+        flex-wrap: nowrap;
+      }
+      
+      .feature-card {
+        flex: 1 0 auto; /* Take full width */
+        width: 100%;
       }
       
       .feature-card:not(:last-child) {
         border-right: none;
         border-bottom: 1px solid rgba(255,255,255,0.1);
+      }
+    }
+    
+    /* UPDATED: Changed medium screens to maintain full-width row */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .features-grid {
+        flex-wrap: nowrap; /* Keep one row */
+      }
+      
+      .feature-card {
+        flex: 1; /* Equal width */
       }
     }
   </style>
@@ -496,18 +526,19 @@
       <h2>Your trusted ally for monitoring your patients' heart rates</h2>
       
       <div class="buttons-container">
-        <button class="custom-button pulse">
+        <!-- Changed button to anchor with the same URL -->
+        <a href="{% url 'Patients' %}" class="custom-button pulse">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
           </svg>
           New Patients
-        </button>
-        <button class="custom-button">
+        </a>
+        <a href="{% url 'Patients' %}" class="custom-button">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
           </svg>
           Current Patients
-        </button>
+        </a>
       </div>
     </div>
   </div>
