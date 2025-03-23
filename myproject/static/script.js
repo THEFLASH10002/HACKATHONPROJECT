@@ -1,4 +1,10 @@
 console.log("JavaScript is working!");
+// Load alert sound
+// Load alert sound
+
+
+let userInteracted = false;
+const alertSound = new Audio("/static/sounds/alert.mp3");
 
 // --- Smooth Scroll ---
 document.querySelectorAll(".nav-link").forEach(link => {
@@ -160,12 +166,15 @@ function updateVitals() {
             } else if (pred === 1) {
                 statusElem.textContent = "🟠 Predicted: Warning";
                 statusElem.style.color = "orange";
+                alertSound.play(); // 🔊 Play sound
                 alert(`⚠️ ${key.toUpperCase()} is in a warning state! Check vitals soon.`);
             } else {
                 statusElem.textContent = "🔴 Predicted: Critical";
                 statusElem.style.color = "red";
+                alertSound.play(); // 🔊 Play sound
                 alert(`🚨 CRITICAL: ${key.toUpperCase()} needs urgent attention!`);
             }
+            
         });
     });
 
@@ -196,7 +205,7 @@ async function sendMessage() {
         let response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
             method: "POST",
             headers: {
-                "Authorization": "Bearer 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",
+                "Authorization": "Bearer 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",
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
@@ -221,12 +230,20 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("Vitals system loaded ✅");
     initCombinedChart();
     updateVitals();
-    setInterval(updateVitals, 3000);
+    setInterval(updateVitals, 10000);
 
     document.getElementById("chatbot-icon")?.addEventListener("click", toggleChatbot);
     document.getElementById("userInput")?.addEventListener("keypress", function (event) {
         if (event.key === "Enter") {
             sendMessage();
         }
+        document.addEventListener("click", () => {
+            userInteracted = true;
+        }, { once: true });
+        
+        document.addEventListener("keydown", () => {
+            userInteracted = true;
+        }, { once: true });
+        
     });
 });

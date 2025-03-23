@@ -339,11 +339,11 @@ footer {
     left: 0;
 
     width: 100%; /* Full-width footer */
-    background: #2C3E94; /* Dark background */
+    background: #fe0303; /* Dark background */
     color: #fff; /* White text */
     text-align: center; /* Center-align text */
     padding: 0.5rem 0;
-    padding-left: 150px;
+    padding-left: 240px;
     z-index: 10; /* Ensure it stays on top */
     box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.8); /* Add shadow */
 }
@@ -1060,6 +1060,30 @@ body {
       background-color: #FF4C4C; /* red */
   }
   
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
 
+.dashboard-title {
+    color: var(--dark);
+}
+
+.dashboard-title h1 {
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+.dashboard-title p {
+    margin: 0.5rem 0 0;
+    color: var(--secondary);
+}
+
+.dashboard-actions {
+    display: flex;
+    gap: 1rem;
+}
 
   }
