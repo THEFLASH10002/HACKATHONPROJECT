@@ -7,18 +7,6 @@
   <title>Cardio Sync</title>
   <link rel="stylesheet" href="{% static 'style.css' %}">
   <style>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     .hero {
       height: 60vh;
       background: linear-gradient(rgba(29, 53, 87, 0.7), rgba(29, 53, 87, 0.7)), url('{% static "images/cardio-background.jpg" %}');
@@ -34,8 +22,6 @@
       position: relative;
       overflow: hidden;
     }
-    
-    
     
     .hero-content p {
       font-size: 1.2rem;
@@ -187,146 +173,7 @@
       }
     }
     
-    /* Updated Features Section */
-    .features-section {
-      background: linear-gradient(to right, rgba(29, 53, 87, 0.95), rgba(69, 123, 157, 0.95));
-      padding: 0;
-      margin-top: 4rem;
-      position: relative;
-      overflow: hidden;
-      width: 100%;
-    }
-    
-    .features-section::before {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background: url('{% static "images/heartbeat-pattern.png" %}') repeat;
-  opacity: 0.03;
-}
-
-/* UPDATED: Adjusted layout to make feature cards stretch across the screen */
-.features-grid {
-  display: flex;
-  width: 100%;
-  position: relative;
-  z-index: 2;
-  flex-wrap: wrap; /* Allow cards to wrap */
-  gap: 2rem; /* Space between cards */
-  justify-content: space-between; /* Distribute cards evenly */
-}
-
-/* UPDATED: Allow feature cards to stretch across the screen */
-.feature-card {
-  flex: 1;
-  min-width: calc(33.333% - 2rem); /* Ensure three cards per row, accounting for space */
-  padding: 4rem 2rem;
-  transition: all 0.4s ease;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  box-sizing: border-box; /* Include padding in width calculations */
-}
-
-/* Space between feature cards (applies to all cards except the last) */
-.feature-card:not(:last-child) {
-  border-right: 1px solid rgba(255,255,255,0.1);
-}
-
-.feature-icon-container {
-  width: 80px;
-  height: 80px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1.5rem;
-  position: relative;
-  transition: all 0.3s ease;
-}
-
-.feature-card:hover .feature-icon-container {
-  background: var(--primary-color);
-  transform: translateY(-5px);
-}
-
-.feature-icon-container svg {
-  width: 40px;
-  height: 40px;
-  stroke: white;
-  transition: all 0.3s ease;
-}
-
-.feature-card h3 {
-  color: white;
-  margin-bottom: 1rem;
-  font-size: 1.4rem;
-  position: relative;
-  padding-bottom: 15px;
-}
-
-.feature-card h3:after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 40px;
-  height: 3px;
-  background: var(--primary-color);
-  transition: width 0.3s ease;
-}
-
-.feature-card:hover h3:after {
-  width: 60px;
-}
-
-.feature-card p {
-  color: rgba(255,255,255,0.8);
-  font-size: 1rem;
-  max-width: 300px;
-  margin: 0 auto;
-  line-height: 1.6;
-}
-
-    .heartbeat {
-      animation: heartbeat 1.5s ease-in-out infinite both;
-    }
-    
-    @keyframes heartbeat {
-      from {
-        transform: scale(1);
-        transform-origin: center center;
-        animation-timing-function: ease-out;
-      }
-      10% {
-        transform: scale(0.91);
-        animation-timing-function: ease-in;
-      }
-      17% {
-        transform: scale(0.98);
-        animation-timing-function: ease-out;
-      }
-      33% {
-        transform: scale(0.87);
-        animation-timing-function: ease-in;
-      }
-      45% {
-        transform: scale(1);
-        animation-timing-function: ease-out;
-      }
-    }
-    
-   
-    
-    /* Updated media queries for feature cards */
+    /* Media queries */
     @media (max-width: 768px) {
       .nav-links {
         gap: 1rem;
@@ -338,9 +185,6 @@
       
       .hero-content h1 {
         font-size: 2.2rem;
-      }
-      .hero-content p {
-        margin-left: 500px;
       }
       
       .welcome-text {
@@ -360,51 +204,7 @@
         flex-direction: column;
         gap: 1rem;
       }
-      
-      .features-section {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-  }
-
-  /* Flexbox layout for horizontal cards */
-  .features-grid {
-    display: flex;
-    flex-wrap: wrap;  /* Ensures responsiveness */
-    justify-content: center;
-    gap: 20px;
-    max-width: 1200px;
-  }
-
-  /* Individual feature card */
-  .feature-card {
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 300px;  /* Fixed width */
-    flex: 1;  /* Allows them to resize dynamically */
-    min-width: 280px;
-  }
-
-  /* Styling for icons */
-  .feature-icon-container {
-    margin-bottom: 10px;
-  }
-
-  svg {
-    width: 50px;
-    height: 50px;
-    color: #4A90E2;
-  }
-
-  h3 {
-    margin: 10px 0;
-    font-size: 1.2em;
-  }
-}
+    }
   </style>
 </head>
 <body>
@@ -423,18 +223,17 @@
     <div class="hero-content">
       <h1>Advanced Cardiac Monitoring Solutions</h1>
       <p>Empowering healthcare professionals with real-time, reliable patient data for better clinical decisions</p>
-      <a href="{% url 'Patients' %}" class="hero-btn">Get Started</a>
+      <a href="#" id="get-started-btn" class="hero-btn">Get Started</a>
     </div>
   </header>
   
-  <div class="welcome-container">
+  <div class="welcome-container" id="welcome-section">
     <div class="welcome-text">
       <h1>Welcome to Cardio Sync</h1>
       <img src="{% static 'images/logo.png' %}" alt="Cardio Sync Logo">
       <h2>Your trusted ally for monitoring your patients' heart rates</h2>
       
       <div class="buttons-container">
-        <!-- Changed button to anchor with the same URL -->
         <a href="{% url 'new_patients' %}" class="custom-button pulse">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -451,42 +250,6 @@
     </div>
   </div>
   
-  <section class="features-section">
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon-container">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="heartbeat">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-          </svg>
-        </div>
-        <h3>Real-time Monitoring</h3>
-        <p>Track your patients' cardiac data in real-time with our advanced monitoring system for immediate insights and proactive care.</p>
-      </div>
-      
-      <div class="feature-card">
-        <div class="feature-icon-container">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 01-2-2z" />
-          </svg>
-        </div>
-        <h3>Comprehensive Analytics</h3>
-        <p>Get detailed insights and trends to make informed clinical decisions with our powerful data visualization tools.</p>
-      </div>
-      
-      <div class="feature-card">
-        <div class="feature-icon-container">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-          </svg>
-        </div>
-        <h3>Alert System</h3>
-        <p>Receive immediate notifications for critical changes in patient conditions to enable rapid response when needed.</p>
-      </div>
-    </div>
-  </section>
-  
-
-
   <!-- Chatbot Icon -->
   <div id="chatbot-icon" onclick="toggleChatbot()">
     <img src="{% static 'images/chatbot.jpg' %}" alt="Chatbot" />
@@ -504,7 +267,6 @@
       </div>
   </div>
 
-
   <footer>
     <p>&copy; 2025 Cardio Sync. All rights reserved.</p>
   </footer>
@@ -519,6 +281,13 @@
       } else {
         nav.classList.remove('scrolled');
       }
+    });
+    
+    // Add smooth scroll for Get Started button
+    document.getElementById('get-started-btn').addEventListener('click', function(e) {
+        e.preventDefault();
+        const welcomeSection = document.getElementById('welcome-section');
+        welcomeSection.scrollIntoView({ behavior: 'smooth' });
     });
   </script>
 </body>
