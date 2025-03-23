@@ -17,11 +17,12 @@ from django.contrib import admin
 from django.urls import path
 
 
-from pages.views import home_view, service_opportunities_view, service_match_view
+from pages.views import home_view, service_opportunities_view, service_match_view, social_view
 
 urlpatterns = [
     path('', home_view, name='home'),  # Home Page
     path('service-opportunities/', service_opportunities_view, name='service_opportunities'),  # Service Opportunities
     path('Patients/', service_match_view, name='Patients'), 
-    path('service-match/', service_match_view, name='service_match'),  # Service Match
+    path('service-match/', service_match_view, name='service_match'),
+    path('new -patients/', social_view, name='new_patients'),  # Service Match
 ]

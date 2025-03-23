@@ -20,4 +20,6 @@ def service_match_view(request, *args, **kwargs):
 
 
 def social_view(request, *args, **kwargs):
-	return HttpResponse("<h1>Social Page</h1>")
+	print(args, kwargs)
+	print(request.user)
+	return render(request, "new patients.html", {})
