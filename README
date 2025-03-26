@@ -1,0 +1,8 @@
+pip install django 
+pip install scikit-learn
+
+cd into the myproject folder
+
+To run on windows: python manage.py runserver
+
+Mac: python3 manage.py runserver
